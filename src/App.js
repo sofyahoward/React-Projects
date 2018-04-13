@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.css';
 // import UserInput from "./userInput/userInput"
 import UserOutput from "./userOutput/userOutput"
 
@@ -48,7 +48,7 @@ deletePersonHandler = (personIndex) => {
     // rendering the persons upon click of a button
     // initially show no users, so it is null
     let persons = null;
-
+    let btnClass = null;
     // then use if statement to render users if state is true
       if (this.state.showPersons) {
         persons = (
@@ -64,15 +64,25 @@ deletePersonHandler = (personIndex) => {
             })}
           </div>
         );
+        btnClass = styles.Red
       }
+
+    const styleClasses = [];
+    if (this.state.persons.length<=2){
+      styleClasses.push(styles.red)
+    }
+    if (this.state.persons.length<=1){
+      styleClasses.push(styles.bold)
+    }
 
     return (
       // return the button first
       // then the input field
       // then the user information
-      <div className="App">
-
+      <div className= {styles.App}>
+      <p className = {styleClasses.join(' ')}>This App Is Working!</p>
         <button
+          className = {btnClass}
           onClick={this.revealUsersHandler}>
           Reveal Users
         </button>
