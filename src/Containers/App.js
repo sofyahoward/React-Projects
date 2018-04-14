@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.css';
-// import UserInput from "./userInput/userInput"
-import UserOutput from "./userOutput/userOutput"
+import Users from "../Components/Users/Users"
+import Cockpit from "../Components/Cockpit/Cockpit"
 
 class App extends Component {
 // state of the application
@@ -28,7 +28,6 @@ deletePersonHandler = (personIndex) => {
   }
 
 // event handler to allow name changes in the input to be dynamic
-// STILL CONFUSED ABOUT THIS ONE
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
       {console.log(id)}
@@ -45,52 +44,28 @@ deletePersonHandler = (personIndex) => {
   }
 
   render() {
-    // rendering the persons upon click of a button
+
     // initially show no users, so it is null
     let persons = null;
-    let btnClass = null;
-    // then use if statement to render users if state is true
+
+    // render users if state is true
       if (this.state.showPersons) {
-        persons = (
-    // map through the state list to return all users dynamically
-          <div>
-            {this.state.persons.map((person, index) => {
-              return <UserOutput
-              click = {() => this.deletePersonHandler(index)}
-              name = {person.name}
-              years = {person.years}
-              key = {person.id}
-              changed = {(event) => this.nameChangedHandler(event, person.id)}  />
-            })}
-          </div>
-        );
-        btnClass = styles.Red
+        persons = <Users
+              persons= {this.state.persons}
+              clicked= {this.deletePersonHandler}
+              changed= {this.nameChangedHandler}/>;
       }
 
-    const styleClasses = [];
-    if (this.state.persons.length<=2){
-      styleClasses.push(styles.red)
-    }
-    if (this.state.persons.length<=1){
-      styleClasses.push(styles.bold)
-    }
-
+// return narrowly focused components
     return (
-      // return the button first
-      // then the input field
-      // then the user information
       <div className= {styles.App}>
-      <p className = {styleClasses.join(' ')}>This App Is Working!</p>
-        <button
-          className = {btnClass}
-          onClick={this.revealUsersHandler}>
-          Reveal Users
-        </button>
-
+        <Cockpit
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          clicked={this.revealUsersHandler}
+         />
         {persons}
-
       </div>
-
     );
   }
 }
